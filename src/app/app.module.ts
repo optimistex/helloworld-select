@@ -7,7 +7,7 @@ import {INgxSelectOptions, NgxSelectModule} from 'ngx-select-ex';
 
 const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
   optionValueField: 'id',
-  optionTextField: 'name',
+ optionTextField: 'ds',
   keyCodeToOptionsOpen: 'ArrowDown'
 };
 
