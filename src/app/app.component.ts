@@ -62,23 +62,18 @@ export class AppComponent implements OnDestroy {
 
 
   constructor() {
-    // consoelsearchCallback
-    const idx = Math.floor(Math.random() * (this.items.length - 1));
-    this._ngxDefault = this.items[idx].ds;
-
-
-    // this._ngxDefaultTimeout = setTimeout(() => {
-    //   this._ngxDefaultInterval = setInterval(() => {
-    //     const idx = Math.floor(Math.random() * (this.items.length - 1));
-    //     this._ngxDefault = this.items[idx].ds;
-    //      // console.log('new default value = ', this._ngxDefault);
-    //   }, 2000);
-    // }, 2000);
+    this._ngxDefaultTimeout = setTimeout(() => {
+       this._ngxDefaultInterval = setInterval(() => {
+         const idx = Math.floor(Math.random() * (this.items.length - 1));
+         this._ngxDefault = this.items[idx].ds;
+         console.log('new default value = ', this._ngxDefault);
+       }, 2000);
+     }, 2000);
   }
 
   ngOnDestroy(): void {
-    // clearTimeout(this._ngxDefaultTimeout);
-    // clearInterval(this._ngxDefaultInterval);
+     clearTimeout(this._ngxDefaultTimeout);
+     clearInterval(this._ngxDefaultInterval);
   }
 
   public doNgxDefault(): any {
