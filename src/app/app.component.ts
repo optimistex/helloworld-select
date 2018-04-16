@@ -1,6 +1,7 @@
 import {Component, OnDestroy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {INgxSelectOption} from 'ngx-select-ex';
+// import {INgxSelectOption} from '../../lib/ngx-select/ngx-select.interfaces';
 
 
 @Component({
@@ -8,7 +9,7 @@ import {INgxSelectOption} from 'ngx-select-ex';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnDestroy{
+export class AppComponent implements OnDestroy {
 
   public items = [
     {id: 1, ds: "uno", selected: true},
@@ -34,19 +35,26 @@ export class AppComponent implements OnDestroy{
   //   'The Hague', 'Turin', 'Valencia', 'Vienna', 'Vilnius', 'Warsaw', 'Wrocław',
   //   'Zagreb', 'Zaragoza', 'Łódź'];
 
+  public ngxControl = new FormControl();
+
   private _ngxDefaultTimeout;
   private _ngxDefaultInterval;
   private _ngxDefault;
-  return ;
 
-  public searchCallback = (search: string, item: INgxSelectOption) =>
+  public searchCallback = (search: string, item: INgxSelectOption) => {
 
-    ( !search ||
+    console.log(item.data.ds);
+    console.log("search:" + search);
+    console.log("data.id:" + +search === item.data.id);
+    console.log("regexpr:" + new RegExp('[a-zA-Z0-9]').test(search));
+    console.log("data.ds:" + (item.data.ds === search));
+    return (!search) ||
       (+search === item.data.id) ||
-      new RegExp('[a-zA-Z0-9]').test(search) ||
+      (new RegExp('[a-zA-Z0-9]').test(search)) ||
+      (item.data.ds === search);
+  }
 
-      (item.data.ds === search)
-    )
+
 
   // public searchCallback = (search: string, item: INgxSelectOption) => ((+search === item.data.id) || (item.data.ds === search));
 
@@ -54,18 +62,23 @@ export class AppComponent implements OnDestroy{
 
 
   constructor() {
-    this._ngxDefaultTimeout = setTimeout(() => {
-      this._ngxDefaultInterval = setInterval(() => {
-        const idx = Math.floor(Math.random() * (this.items.length - 1));
-        this._ngxDefault = this.items[idx].ds;
-        // console.log('new default value = ', this._ngxDefault);
-      }, 2000);
-    }, 2000);
+    // consoelsearchCallback
+    const idx = Math.floor(Math.random() * (this.items.length - 1));
+    this._ngxDefault = this.items[idx].ds;
+
+
+    // this._ngxDefaultTimeout = setTimeout(() => {
+    //   this._ngxDefaultInterval = setInterval(() => {
+    //     const idx = Math.floor(Math.random() * (this.items.length - 1));
+    //     this._ngxDefault = this.items[idx].ds;
+    //      // console.log('new default value = ', this._ngxDefault);
+    //   }, 2000);
+    // }, 2000);
   }
 
   ngOnDestroy(): void {
-    clearTimeout(this._ngxDefaultTimeout);
-    clearInterval(this._ngxDefaultInterval);
+    // clearTimeout(this._ngxDefaultTimeout);
+    // clearInterval(this._ngxDefaultInterval);
   }
 
   public doNgxDefault(): any {
@@ -99,4 +112,6 @@ export class AppComponent implements OnDestroy{
   public doRemove(value: any) {
     console.log('SingleDemoComponent.doRemove', value);
   }
+
+  public doSelectOptions = (options: INgxSelectOption[]) => console.log('AppComponent.doSelectOptions', options);
 }
