@@ -1,8 +1,11 @@
 import {Component, OnDestroy} from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {INgxSelectOption} from 'ngx-select-ex';
-// import {INgxSelectOption} from '../../lib/ngx-select/ngx-select.interfaces';
+import * as escapeStringNs from 'escape-string-regexp';
 
+const escapeString = escapeStringNs;
+
+// import {INgxSelectOption} from '../../lib/ngx-select/ngx-select.interfaces';
 
 @Component({
   selector: 'app-root',
@@ -12,16 +15,16 @@ import {INgxSelectOption} from 'ngx-select-ex';
 export class AppComponent implements OnDestroy {
 
   public items = [
-    {id: 1, ds: "uno", selected: true},
-    {id: 2, ds: "dos", selected: true},
-    {id: 3, ds: "tres", selected: true},
-    {id: 4, ds: "cuatro", selected: true},
-    {id: 5, ds: "cinco", selected: true},
-    {id: 6, ds: "seis", selected: true},
-    {id: 7, ds: "siete", selected: true},
-    {id: 8, ds: "ocho", selected: true},
-    {id: 9, ds: "nueve", selected: true},
-    {id: 10, ds: "diez", selected: true}
+    {id: 1, ds: 'uno', selected: true},
+    {id: 2, ds: 'dos', selected: true},
+    {id: 3, ds: 'tres', selected: true},
+    {id: 4, ds: 'cuatro', selected: true},
+    {id: 5, ds: 'cinco', selected: true},
+    {id: 6, ds: 'seis', selected: true},
+    {id: 7, ds: 'siete', selected: true},
+    {id: 8, ds: 'ocho', selected: true},
+    {id: 9, ds: 'nueve', selected: true},
+    {id: 10, ds: 'diez', selected: true}
   ];
   //
   // public items: string[] = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
@@ -41,39 +44,29 @@ export class AppComponent implements OnDestroy {
   private _ngxDefaultInterval;
   private _ngxDefault;
 
-  public searchCallback = (search: string, item: INgxSelectOption) => {
-
-    console.log(item.data.ds);
-    console.log("search:" + search);
-    console.log("data.id:" + (+search === item.data.id));
-    console.log("regexpr:" + new RegExp('[a-zA-Z0-9]').test(search));
-    console.log("data.ds:" + (item.data.ds === search));
+  public searchCallback(search: string, item: INgxSelectOption) {
+    console.log('search: ', search, 'data: ', item.data);
     return (!search) ||
       (+search === item.data.id) ||
-      (new RegExp('[a-zA-Z0-9]').test(search)) ||
+      ((new RegExp(escapeString(search), 'i')).test(item.data.ds)) ||
       (item.data.ds === search);
   }
 
-
-
   // public searchCallback = (search: string, item: INgxSelectOption) => ((+search === item.data.id) || (item.data.ds === search));
-
-
-
 
   constructor() {
     this._ngxDefaultTimeout = setTimeout(() => {
-       this._ngxDefaultInterval = setInterval(() => {
-         const idx = Math.floor(Math.random() * (this.items.length - 1));
-         this._ngxDefault = this.items[idx].ds;
-         console.log('new default value = ', this._ngxDefault);
-       }, 2000);
-     }, 2000);
+      this._ngxDefaultInterval = setInterval(() => {
+        const idx = Math.floor(Math.random() * (this.items.length - 1));
+        this._ngxDefault = this.items[idx].ds;
+        console.log('new default value = ', this._ngxDefault);
+      }, 2000);
+    }, 2000);
   }
 
   ngOnDestroy(): void {
-     clearTimeout(this._ngxDefaultTimeout);
-     clearInterval(this._ngxDefaultInterval);
+    clearTimeout(this._ngxDefaultTimeout);
+    clearInterval(this._ngxDefaultInterval);
   }
 
   public doNgxDefault(): any {
