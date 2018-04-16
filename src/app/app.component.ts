@@ -45,7 +45,7 @@ export class AppComponent implements OnDestroy {
 
     console.log(item.data.ds);
     console.log("search:" + search);
-    console.log("data.id:" + +search === item.data.id);
+    console.log("data.id:" + (+search === item.data.id));
     console.log("regexpr:" + new RegExp('[a-zA-Z0-9]').test(search));
     console.log("data.ds:" + (item.data.ds === search));
     return (!search) ||
