@@ -16,7 +16,7 @@ const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more
     AppComponent
   ],
   imports: [
-    BrowserModule, NgxSelectModule
+    BrowserModule, NgxSelectModule.forRoot(CustomSelectOptions)
   ],
   providers: [],
   bootstrap: [AppComponent]
