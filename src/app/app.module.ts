@@ -3,7 +3,13 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { NgxSelectModule } from 'ngx-select-ex';
+import {INgxSelectOptions, NgxSelectModule} from 'ngx-select-ex';
+
+const CustomSelectOptions: INgxSelectOptions = { // Check the interface for more options
+  optionValueField: 'id',
+  optionTextField: 'name',
+  keyCodeToOptionsOpen: 'ArrowDown'
+};
 
 @NgModule({
   declarations: [
@@ -16,3 +22,4 @@ import { NgxSelectModule } from 'ngx-select-ex';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
