@@ -6,37 +6,36 @@ const escapeString = escapeStringNs;
 
 @Component({
   selector: 'app-mytest',
-  templateUrl: './mytest.component.html',
-  styleUrls: ['./mytest.component.css']
+  templateUrl: './mytest.component.html'
 })
-export class MytestComponent implements OnInit, OnDestroy{
+export class MytestComponent implements OnInit, OnDestroy {
 
   // private _ngxDefaultTimeout;
   // private _ngxDefaultInterval;
   private _ngxDefault: string;
 
-  @Input() valorPorDefecto;
+  @Input() valorPorDefecto: string;
 
   public items = [
-    {id: 1, ds: "uno", selected: true},
-    {id: 2, ds: "dos", selected: true},
-    {id: 3, ds: "tres", selected: true},
-    {id: 4, ds: "cuatro", selected: true},
-    {id: 5, ds: "cinco", selected: true},
-    {id: 6, ds: "seis", selected: true},
-    {id: 7, ds: "siete", selected: true},
-    {id: 8, ds: "ocho", selected: true},
-    {id: 9, ds: "nueve", selected: true},
-    {id: 10, ds: "diez", selected: true}
+    {id: 1, ds: 'uno', selected: true},
+    {id: 2, ds: 'dos', selected: true},
+    {id: 3, ds: 'tres', selected: true},
+    {id: 4, ds: 'cuatro', selected: true},
+    {id: 5, ds: 'cinco', selected: true},
+    {id: 6, ds: 'seis', selected: true},
+    {id: 7, ds: 'siete', selected: true},
+    {id: 8, ds: 'ocho', selected: true},
+    {id: 9, ds: 'nueve', selected: true},
+    {id: 10, ds: 'diez', selected: true}
   ];
 
-  public searchCallback = (search: string, item: INgxSelectOption) => {
+  public searchCallback(search: string, item: INgxSelectOption) {
 
     console.log(item.data.ds);
-    console.log("search:" + search);
-    console.log("data.id:" + (+search === item.data.id));
-    console.log("regexpr:" + new RegExp('[a-zA-Z0-9]').test(search));
-    console.log("data.ds:" + (item.data.ds === search));
+    console.log('search:' + search);
+    console.log('data.id:' + (+search === item.data.id));
+    console.log('regexpr:' + new RegExp('[a-zA-Z0-9]').test(search));
+    console.log('data.ds:' + (item.data.ds === search));
     return (!search) ||
       (((new RegExp(escapeString(search), 'i')).test(item.data.ds))) ||
       (item.data.id === +search) ||
@@ -63,8 +62,9 @@ export class MytestComponent implements OnInit, OnDestroy{
   }
 
   public doNgxDefault(): any {
-    console.log("doNgxDefault | valorPorDefecto " + this.valorPorDefecto);
-    return this.valorPorDefecto;
+    console.log('doNgxDefault | valorPorDefecto ' + this.valorPorDefecto);
+    const defObj = this.items.find(item => item.ds === this.valorPorDefecto);
+    return defObj ? defObj.id : null;
   }
 
   public inputTyped(source: string, text: string) {
