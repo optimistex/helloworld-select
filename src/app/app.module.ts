@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-
+import { NgxSelectModule } from 'ngx-select-ex';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule, NgxSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]
