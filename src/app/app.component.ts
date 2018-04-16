@@ -13,16 +13,16 @@ const escapeString = escapeStringNs;
 export class AppComponent implements OnDestroy {
 
   public items = [
-    {id: 1, ds: "uno", selected: true},
-    {id: 2, ds: "dos", selected: true},
-    {id: 3, ds: "tres", selected: true},
-    {id: 4, ds: "cuatro", selected: true},
-    {id: 5, ds: "cinco", selected: true},
-    {id: 6, ds: "seis", selected: true},
-    {id: 7, ds: "siete", selected: true},
-    {id: 8, ds: "ocho", selected: true},
-    {id: 9, ds: "nueve", selected: true},
-    {id: 10, ds: "diez", selected: true}
+    {id: 1, ds: 'uno', selected: true},
+    {id: 2, ds: 'dos', selected: true},
+    {id: 3, ds: 'tres', selected: true},
+    {id: 4, ds: 'cuatro', selected: true},
+    {id: 5, ds: 'cinco', selected: true},
+    {id: 6, ds: 'seis', selected: true},
+    {id: 7, ds: 'siete', selected: true},
+    {id: 8, ds: 'ocho', selected: true},
+    {id: 9, ds: 'nueve', selected: true},
+    {id: 10, ds: 'diez', selected: true}
   ];
   //
   // public items: string[] = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
@@ -42,13 +42,12 @@ export class AppComponent implements OnDestroy {
   private _ngxDefaultInterval;
   private _ngxDefault: string;
 
-  public searchCallback = (search: string, item: INgxSelectOption) => {
-
+  public searchCallback(search: string, item: INgxSelectOption) {
     console.log(item.data.ds);
-    console.log("search:" + search);
-    console.log("data.id:" + (+search === item.data.id));
-    console.log("regexpr:" + new RegExp('[a-zA-Z0-9]').test(search));
-    console.log("data.ds:" + (item.data.ds === search));
+    console.log('search:' + search);
+    console.log('data.id:' + (+search === item.data.id));
+    console.log('regexpr:' + new RegExp('[a-zA-Z0-9]').test(search));
+    console.log('data.ds:' + (item.data.ds === search));
     return (!search) ||
       (((new RegExp(escapeString(search), 'i')).test(item.data.ds))) ||
       (item.data.id === +search) ||
@@ -56,10 +55,7 @@ export class AppComponent implements OnDestroy {
   }
 
 
-
   // public searchCallback = (search: string, item: INgxSelectOption) => ((+search === item.data.id) || (item.data.ds === search));
-
-
 
 
   constructor() {
