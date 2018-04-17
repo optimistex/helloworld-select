@@ -3,27 +3,29 @@
   <div class="example-block__item">
     <!--[formControl]="ngxControl"-->
     <ngx-select
-                #selOperadora
-            [searchCallback]="searchCallback"
-            [allowClear]="true"
-            [defaultValue]="doNgxDefault()"
-            [items]="items"
-            placeholder="No city selected"
-            (typed)="inputTyped('ngx-select', $event)"
-            (focus)="doFocus()"
-            (blur)="doBlur()"
-            (open)="doOpen()"
-            (close)="doClose()"
-            (select)="doSelect($event)"
-            (remove)="doRemove($event)"
-            (selectionChanges)="doSelectOptions($event)">
+      #selOperadora
+      [searchCallback]="searchCallback"
+      [allowClear]="true"
+      [defaultValue]="doNgxDefault()"
+      [items]="items"
+      placeholder="No city selected"
+      (typed)="inputTyped('ngx-select', $event)"
+      (focus)="doFocus()"
+      (blur)="doBlur()"
+      (open)="doOpen()"
+      (close)="doClose()"
+      (select)="doSelect($event)"
+      (remove)="doRemove($event)"
+      (selectionChanges)="doSelectOptions($event)">
     </ngx-select>
     <p></p>
     <!--<div class="alert alert-secondary">-->
     <!--<pre>{{ngxControl.value | json}}</pre>-->
     <!--</div>-->
-    <div>
-      {{searchCallback}}
+    <div *ngIf="isDeleted">
+      <alert type="danger">
+        La operadora es obligatoria
+        </alert>
     </div>
     <div>
     </div>
