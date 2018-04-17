@@ -6,8 +6,7 @@ const escapeString = escapeStringNs;
 
 @Component({
   selector: 'app-mytest',
-  templateUrl: './mytest.component.html',
-  styleUrls: ['./mytest.component.css']
+  templateUrl: './mytest.component.html'
 })
 export class MytestComponent implements OnInit, OnDestroy, AfterViewInit{
   @ViewChild('selOperadora') selectOperadoras: ElementRef;
