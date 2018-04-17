@@ -1,5 +1,15 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {INgxSelectOption} from 'ngx-select-ex';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import {INgxSelectOption, NgxSelectComponent} from 'ngx-select-ex';
 import * as escapeStringNs from 'escape-string-regexp';
 // import {INgxSelectOption} from '../../lib/ngx-select/ngx-select.interfaces';
 const escapeString = escapeStringNs;
@@ -8,8 +18,8 @@ const escapeString = escapeStringNs;
   selector: 'app-mytest',
   templateUrl: './mytest.component.html'
 })
-export class MytestComponent implements OnInit, OnDestroy, AfterViewInit{
-  @ViewChild('selOperadora') selectOperadoras: ElementRef;
+export class MytestComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('selOperadora') selectOperadoras: NgxSelectComponent;
 
   @Input() valorPorDefecto;
   @Input() items;
@@ -30,9 +40,11 @@ export class MytestComponent implements OnInit, OnDestroy, AfterViewInit{
       (item.data.ds === search);
   }
 
-  constructor() {}
+  constructor() {
+  }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+  }
 
   ngOnInit() {
     this.isDeleted = false;
@@ -40,10 +52,16 @@ export class MytestComponent implements OnInit, OnDestroy, AfterViewInit{
   }
 
   ngAfterViewInit() {
-    this.selectOperadoras.nativeElement.optionsOpen();
+    if (this.selectOperadoras) {
+      setTimeout(() => this.selectOperadoras.optionsOpen(), 0);
+    }
   }
 
   public doNgxDefault(): any {
+    if (!this.items) {
+      return null;
+    }
+
     let defObj;
     let result;
     if (this.field === 'id') {
