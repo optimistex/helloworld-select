@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {INgxSelectOption} from 'ngx-select-ex';
 import * as escapeStringNs from 'escape-string-regexp';
 // import {INgxSelectOption} from '../../lib/ngx-select/ngx-select.interfaces';
@@ -6,65 +6,57 @@ const escapeString = escapeStringNs;
 
 @Component({
   selector: 'app-mytest',
-  templateUrl: './mytest.component.html'
+  templateUrl: './mytest.component.html',
+  styleUrls: ['./mytest.component.css']
 })
-export class MytestComponent implements OnInit, OnDestroy {
+export class MytestComponent implements OnInit, OnDestroy, AfterViewInit{
+  @ViewChild('selOperadora') selectOperadoras: ElementRef;
 
-  // private _ngxDefaultTimeout;
-  // private _ngxDefaultInterval;
-  private _ngxDefault: string;
+  @Input() valorPorDefecto;
+  @Input() items;
+  @Input() field;
+  @Input() isRequired;
 
-  @Input() valorPorDefecto: string;
+  @Output() valorSeleccionado: EventEmitter<any> = new EventEmitter<any>();
 
-  public items = [
-    {id: 1, ds: 'uno', selected: true},
-    {id: 2, ds: 'dos', selected: true},
-    {id: 3, ds: 'tres', selected: true},
-    {id: 4, ds: 'cuatro', selected: true},
-    {id: 5, ds: 'cinco', selected: true},
-    {id: 6, ds: 'seis', selected: true},
-    {id: 7, ds: 'siete', selected: true},
-    {id: 8, ds: 'ocho', selected: true},
-    {id: 9, ds: 'nueve', selected: true},
-    {id: 10, ds: 'diez', selected: true}
-  ];
 
-  public searchCallback(search: string, item: INgxSelectOption) {
+  isDeleted: boolean;
 
-    console.log(item.data.ds);
-    console.log('search:' + search);
-    console.log('data.id:' + (+search === item.data.id));
-    console.log('regexpr:' + new RegExp('[a-zA-Z0-9]').test(search));
-    console.log('data.ds:' + (item.data.ds === search));
+
+  public searchCallback = (search: string, item: INgxSelectOption) => {
+
     return (!search) ||
       (((new RegExp(escapeString(search), 'i')).test(item.data.ds))) ||
       (item.data.id === +search) ||
       (item.data.ds === search);
   }
 
-  constructor() {
-    // this._ngxDefault = this.valorPorDefecto;
-    // this._ngxDefaultTimeout = setTimeout(() => {
-    //   this._ngxDefaultInterval = setInterval(() => {
-    //     const idx = Math.floor(Math.random() * (this.items.length - 1));
-    //     this._ngxDefault = this.items[idx].ds;
-    //     console.log('new default value = ', this._ngxDefault);
-    //   }, 2000);
-    // }, 2000);
-  }
+  constructor() {}
 
-  ngOnDestroy(): void {
-    // clearTimeout(this._ngxDefaultTimeout);
-    // clearInterval(this._ngxDefaultInterval);
-  }
+  ngOnDestroy(): void {}
 
   ngOnInit() {
+    this.isDeleted = false;
+
+  }
+
+  ngAfterViewInit() {
+    this.selectOperadoras.nativeElement.optionsOpen();
   }
 
   public doNgxDefault(): any {
-    console.log('doNgxDefault | valorPorDefecto ' + this.valorPorDefecto);
-    const defObj = this.items.find(item => item.ds === this.valorPorDefecto);
-    return defObj ? defObj.id : null;
+    let defObj;
+    let result;
+    if (this.field === 'id') {
+      defObj = this.items.find(item => item.id === +this.valorPorDefecto);
+    } else {
+      defObj = this.items.find(item => item.ds === this.valorPorDefecto);
+    }
+    result = defObj ? defObj.id : null;
+
+    // this.valorSeleccionado.emit(result);
+
+    return result;
   }
 
   public inputTyped(source: string, text: string) {
@@ -89,10 +81,17 @@ export class MytestComponent implements OnInit, OnDestroy {
 
   public doSelect(value: any) {
     console.log('SingleDemoComponent.doSelect', value);
+    this.isDeleted = false;
+    this.valorSeleccionado.emit(value);
   }
 
   public doRemove(value: any) {
     console.log('SingleDemoComponent.doRemove', value);
+
+    this.valorSeleccionado.emit(null);
+    this.isDeleted = (this.isRequired);
+
+    console.log('SingleDemoComponent.doRemove', this.valorSeleccionado);
   }
 
   public doSelectOptions = (options: INgxSelectOption[]) => console.log('AppComponent.doSelectOptions', options);
